@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+  <label for="name">Name</label>
+  <input type="text" name="name" required>
+  <label for="category">Category</label>
+  <select name="category" required>
+    <option value="sides">Sides</option>
+    <option value="main">Main Dish</option>
+    <option value="soups">Soups</option>
+    <option value="salads">Salads</option>
+    <option value="appetizers">Appetizers</option>
+    <option value="drinks">Drinks</option>
+  </select>
+  <label for="price">Price</label>
+  <input type="number" name="price" step="0.01" required>
+  <label for="description">Description</label>
+  <textarea name="description" rows="3" cols="30" placeholder="optional"></textarea>
+  <label for="image">Upload Image</label>
+  <input type="file" name="image">
+  <button>Add Menu Item</button>
+</form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'main/cart_items.html' %}
+
+{% if items %}
+<a href="{{ url_for('main.checkout') }}"><button>Checkout</button></a>
+<a href="{{ url_for('main.scheduled')}}"><button>Scheduled Order</button></a>
+{% else %}
+<a href="{{ url_for('main.menu') }}"><button>Menu</button></a>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% if title %}Restaurant - {{ title }}{% else %}Restaurant{% endif %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+    <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+  </head>
+  <body>
+    <nav>
+      <a href="{{ url_for('admin.index') }}">Admin</a>
+      <a href="{{ url_for('main.index') }}">Home</a>
+      <a href="{{ url_for('main.menu') }}">Menu</a>
+      <a href="{{ url_for('main.cart') }}">Cart</a>
+      <a href="{{ url_for('main.lookup') }}">Lookup</a>
+      <a href="{{ url_for('main.contact') }}">Contact</a>
+      <hr>
+    </nav>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul class="flash">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    {% endwith %}
+
+    <h1>{{ title}}</h1>
+    {% block content %}
+    {% endblock %}
+
+    <script src="https://unpkg.com/mithril/mithril.js"></script>
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+    <script src="{{ url_for('static', filename='script.js')}}"></script>
+    {% block scripts %}
+    {% endblock %}
+  </body>
+</html>

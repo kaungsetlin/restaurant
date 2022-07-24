@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post">
+  <label for="name">Name</label>
+  <input type="text" name="name">
+  <label for="email">Email</label>
+  <input type="email" name="email">
+  <label for="phone">Phone</label>
+  <input type="tel" name="phone">
+  <label for="note" required>Note</label>
+  <textarea name="note" rows="3" cols="30" placeholder="optional"></textarea>
+
+  <select name="payment" id="payment" onchange="showBadge()" required>
+    <option value="cash">Cash</option>
+    <option value="zelle">Zelle</option>
+  </select>
+  <button>Order</button>
+</form>
+<div id="zelle">
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function showBadge() {
+    const root = document.getElementById('zelle');
+    if (document.getElementById('payment').value == 'zelle') {
+      badges = [
+                m('img', {width: "40%", style: "float: left; border: 1px solid; border-radius: 5%;", src: "{{ url_for('static', filename='zelle_email.jpg') }}"}),
+                m('img', {width: "40%", style: "margin-left: 5%; float: left;", src: "{{ url_for('static', filename='zelle_phone.jpg') }}"})
+              ]
+      m.render(root, badges)
+    }
+    else {
+      m.render(root, null)
+    }
+  };
+</script>
+{% endblock %}

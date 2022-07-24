@@ -1,0 +1,12 @@
+{% for item in menu %}
+<div class="menu-item">
+  <h4>{{ item['name'] }}</h4>
+  <p>{{ item['category'] }}</p>
+  <p>{{ item['description'] }}</p>
+  <p>{{ "${:,.2f}".format(item['price']) }}</p>
+  <img src="https://picsum.photos/seed/{{ loop.index }}/200"><br>
+  <label for="qty">Qty</label>
+  <input type="number" name="qty" id="qty-{{ item['id'] }}" value="1", min="1">
+  <button onclick="addtoCart({{ item['id'] }})">Add to Cart</button>
+</div>
+{% endfor %}

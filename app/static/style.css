@@ -1,0 +1,11 @@
+nav a {margin-right: 5%;}
+nav hr {margin-bottom: 3%;}
+progress {width: 80%; height: 1.5em;}
+/* flash */
+.flash {list-style-type: none; margin: 0; padding: 1% 0 1% 0; text-align: center; background: lightblue; font-weight: bold; margin-top: -3.2%;}
+
+/* main.menu, main.index*/
+.menu-item {border:2px solid; margin-bottom: 3%; padding: 2%;}
+
+/* main.checkout */
+.checkout-summary {width: 50%; border:2px solid; margin-bottom: 3%; padding: 2%; text-align: center;}

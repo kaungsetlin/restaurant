@@ -1,0 +1,17 @@
+<div class="checkout-summary">
+<h3>Checkout Summary</h3>
+{% if scheduled %}
+<p><i>Scheduled: {{scheduled['date']}} at {{scheduled['time']}}</i></p>
+{% endif %}
+<hr>
+{% for item in items %}
+  <p>
+    <span>{{ item['name'] }}</span>
+    <span>x{{ item['qty'] }}</span>
+    <span>{{ "${:,.2f}".format(item['price'] * item['qty']) }}</span>
+  </p>
+{% endfor %}
+<hr>
+<p><b>Total Items: {{ items | sum(attribute='qty')}}</b></p>
+<p><b>Total Price: {{ "${:,.2f}".format(total) }}</b></p>
+</div>

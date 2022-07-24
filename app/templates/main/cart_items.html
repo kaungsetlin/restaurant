@@ -1,0 +1,15 @@
+{% if items %}
+{% for item in items %}
+<div class="menu-item">
+  <span>{{ item['name'] }}</span>
+  <span>x{{ item['qty'] }}</span>
+  <span>{{ "${:,.2f}".format(item['price'] * item['qty']) }}</span>
+  <br><br>
+  <input type="number" name="qty" id="qty-{{ item['id'] }}" value="{{ item['qty'] }}", min="1">
+  <button onclick="addtoCart({{ item['id'] }})">Update</button>
+  <button onclick="removefromCart({{ item['id'] }})">Remove</button>
+</div>
+{% endfor %}
+{% else %}
+<p>No items in cart.</p>
+{% endif %}

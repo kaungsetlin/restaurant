@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post">
+  <label for="date">Date</label>
+  <input type="date" name="date" min="{{ min }}" max="{{ max }}" value="{{ min }}">
+  <label for="time" required>Time</label>
+  <input type="time" name="time" min="09:00" max="17:00" value="12:00" required>
+  <a href="{{ url_for('main.payment') }}"><button>Checkout</button></a>
+</form>
+{% endblock %}

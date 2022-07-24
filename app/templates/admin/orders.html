@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="orders"></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  new gridjs.Grid({
+    columns: [
+    {id: 'status', name: 'Status',
+    formatter: (cell) => gridjs.html(`
+    <select name="status" id="status-${cell.split(';')[0]}" onchange="updateStatus(${cell.split(';')[0]})">
+      <option value="0" ${cell.split(';')[1] == 0  ? "selected" : null}>Cancelled</option>
+      <option value="1" ${cell.split(';')[1] == 1  ? "selected" : null}>Created</option>
+      <option value="2" ${cell.split(';')[1] == 2  ? "selected" : null}>Confirmed</option>
+      <option value="3" ${cell.split(';')[1] == 3  ? "selected" : null}>Ready</option>
+    </select>`)
+    },
+    {id: 'is_paid', name: 'Paid',
+    formatter: (cell) => gridjs.html(`
+    <select name="paid" id="paid-${cell.split(';')[0]}" onchange="updatePaid(${cell.split(';')[0]})">
+      <option value="0" ${cell.split(';')[1] == 0  ? "selected" : null}>False</option>
+      <option value="1" ${cell.split(';')[1] == 1  ? "selected" : null}>True</option>
+    </select>`)
+    },
+    {id: 'id', name: 'ID'},
+    {id: 'cust_name', name: 'Name'},
+    {id: 'due', name: 'Due'},
+
+    // {
+    //   id: 'action',
+    //   name: 'Action',
+    //   formatter: (cell) => gridjs.html(`<a class="button" href="/warehouse/stock/${cell}">In Stock</a>`)
+    // },
+    ],
+    style: {table: {whiteSpace: 'nowrap'}},
+    data: [
+      {% for order in orders %}
+      {
+        id: '{{ order.id }}',
+        cust_name: '{{ order.cust_name }}',
+        email: '{{ order.email }}',
+        phone: '{{ order.phone }}',
+        due: '{{ order.due }}',
+        timestamp: '{{ order.timestamp }}',
+        is_paid: {{ order.id }} + ';' + {{ order.is_paid }},
+        status: {{ order.id }} + ';' + {{ order.status}},
+      },
+      {% endfor %}
+    ],
+    search: true,
+    sort: true,
+    pagination: {limit: 25},
+    autoWidth: true,
+  }).render(document.getElementById('orders'));
+
+  function updateStatus(id) {
+    status = document.getElementById(`status-${id}`).value
+    m.route.set('status/:id/:status', {id: id, status: status});
+  };
+
+  function updatePaid(id) {
+    paid = document.getElementById(`paid-${id}`).value
+    m.route.set('paid/:id/:paid', {id: id, paid: paid});
+  };
+
+</script>
+{% endblock %}

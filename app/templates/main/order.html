@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<label for="progress">Order Status: {{ order['status'] }} ({{ order['progress'] }}%)</label><br>
+<progress name="progress" value="{{ order['progress'] }}" max="100"></progress>
+<hr>
+<h3>Items</h3>
+{% for item in items %}
+<p>{{ item['name'] }} x{{ item['qty']|int }}</p>
+{% endfor %}
+<hr>
+{% if order['status'] == "Created" %}
+<button onclick="alert('Please call +1 (314) 345 0652 for support.')">Contact</button>
+{% elif order['status'] == "Ready" %}
+<p><b>Your order is ready for pickup!</b></p>
+{% endif %}
+
+{% endblock %}
