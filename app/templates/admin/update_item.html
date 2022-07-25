@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+  <label for="name">Name</label>
+  <input type="text" name="name" value="{{ item['name'] }}" required>
+  <label for="category">Category</label>
+  <select name="category" required>
+    <option value="sides" {{ "selected" if item["category"] == "sides" else none}}>Sides</option>
+    <option value="main" {{ "selected" if item["category"] == "main" else none}}>Main Dish</option>
+    <option value="soups" {{ "selected" if item["category"] == "soups" else none}}>Soups</option>
+    <option value="salads" {{ "selected" if item["category"] == "salads" else none}}>Salads</option>
+    <option value="appetizers" {{ "selected" if item["category"] == "appetizers" else none}}>Appetizers</option>
+    <option value="drinks" {{ "selected" if item["category"] == "drinks" else none}}>Drinks</option>
+  </select>
+  <label for="price">Price</label>
+  <input type="number" name="price" step="0.01" value="{{ item['price'] }}" required>
+  <label for="description">Description</label>
+  <textarea name="description" rows="3" cols="30" placeholder="optional">{{ item['description'] }}</textarea>
+  <label for="image">Upload Image</label>
+  <input type="file" name="image">
+  <input type="checkbox" name="special" {{ "checked" if item["is_special"] else none }}>
+  <label for="special">Today's Special</label>
+  <input type="checkbox" name="active" {{ "checked" if item["is_active"] else none }}>
+  <label for="active">Active</label><br>
+  <button>Update Item</button>
+  <button formaction="{{ url_for('admin.delete_item', id=item['id']) }}" onclick="confirm('Are you sure you want to delete this item?')">Delete Item</button>
+</form>
+{% endblock %}

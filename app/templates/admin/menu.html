@@ -1,24 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-  <label for="name">Name</label>
-  <input type="text" name="name" required>
-  <label for="category">Category</label>
-  <select name="category" required>
-    <option value="sides">Sides</option>
-    <option value="main">Main Dish</option>
-    <option value="soups">Soups</option>
-    <option value="salads">Salads</option>
-    <option value="appetizers">Appetizers</option>
-    <option value="drinks">Drinks</option>
-  </select>
-  <label for="price">Price</label>
-  <input type="number" name="price" step="0.01" required>
-  <label for="description">Description</label>
-  <textarea name="description" rows="3" cols="30" placeholder="optional"></textarea>
-  <label for="image">Upload Image</label>
-  <input type="file" name="image">
-  <button>Add Menu Item</button>
-</form>
+<a href="{{ url_for('admin.add_item') }}"><button>Add Menu Item</button></a>
+<div id="menu"></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  new gridjs.Grid({
+    columns: [
+    {id: 'id', name: 'ID', 
+    formatter: (cell) => gridjs.html(`<a href="menu/update/${cell}">${cell}</a>`)},
+    {id: 'name', name: 'Name'},
+    {id: 'category', name: 'Category'},
+    {id: 'price', name: 'Price'},
+    {id: 'description', name: 'Description'},
+    {id: 'is_special', name: 'Special'},
+    {id: 'is_active', name: 'Active'},
+    ],
+    style: {table: {whiteSpace: 'nowrap'}},
+    data: [
+      {% for item in menu %}
+      {
+        id: '{{ item.id }}',
+        name: '{{ item.name }}',
+        category: '{{ item.category }}',
+        price: '{{ item.price }}',
+        description: '{{ item.description }}',
+        is_special: {{ item.is_special }} ? 'True' : 'False',
+        is_active: {{ item.is_active }} ? 'True' : 'False',
+      },
+      {% endfor %}
+    ],
+    search: true,
+    sort: true,
+    pagination: {limit: 25},
+    autoWidth: true,
+  }).render(document.getElementById('menu'));
+</script>
 {% endblock %}
